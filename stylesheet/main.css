@@ -1,0 +1,25 @@
+@import url('http://fonts.cdnfonts.com/css/sf-pro-display');
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box
+}
+
+body{
+    font-family:'SF Pro Display';
+    min-width: 100%;
+    width: 100%;
+}
+li{
+    margin: 0 10px 0 10px;
+    padding: 0;
+}
+.nav-link{
+    padding:0.1rem;
+}
+.btn-cart{
+    padding-left: 2rem;
+}
+.offcanvas{
+    transition: 0.3s;
+}

@@ -1,105 +1,82 @@
-let opcionTipo, tipoPc = '', procesador='', gpu = [], ram = [], tipoDisco='';
-class Pc {
-    constructor(procesador, tipoPc, gpu, ram, tipoDisco) {
-        this.procesador = procesador;
-        this.tipoPc = tipoPc;
-        this.gpu = gpu;
-        this.ram = ram;
-        this.tipoDisco = tipoDisco;
-    }
-    checkCompatibility() {
-        if (this.ram[1]+2<this.gpu[1])
-            console.log(`ERROR DE COMPATIBILIDAD ENTRE RAM DE: ${this.ram[1]} y GPU DE: ${this.gpu[1]}`);
-        else
-            console.log('TODO EN ORDEN porque tenes una gpu de marca:', this.gpu[0], ' con cantidad de gb:', this.gpu[1])
+const carrito = [];
+function randomId() {
+    return Math.random().toString(36).substr(2, 9);
+};
+
+class Producto {
+    constructor(nombre, precio, id) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.id = id;
     }
 }
-
-const armarPc = () => {
-    let opcion = menu();
-    while(opcion!='7'){
-        switch(opcion){
-            case '1': opcionTipo(); break;
-            case '2': procesador(); break;
-            case '3': gpu(); break;
-            case '4': ram();break;
-            case '5': tipoDisco(); break;
-            case '6': cargarDatosPc(); return new Pc(procesador, tipoPc, gpu, ram, tipoDisco);       
-            }
-        opcion = menu();
+class ProductoACarrito {
+    constructor(producto, cantidad) {
+        this.producto = producto;
+        this.cantidad = cantidad;
     }
 }
 
+const MacBook = new Producto('MacBook Pro', 25000, randomId())
+const Iphone14 = new Producto('Iphone 14', 5000, randomId())
+const Ipad = new Producto('Ipad Pro', 21000, randomId())
+const productos = [MacBook, Iphone14, Ipad];
 
-const menu = ()=>{
-    let opcion = prompt
-    (`-----MENU----\n
-      1-Tipo de PC\n
-      2-Procesador\n
-      3-GPU\n
-      4-RAM\n
-      5-Tipo de Disco\n
-      6-ARMAR\n
-      7-SALIR\n
-      ---->Opcion: ` ); 
-      while(!(opcion>=1&&opcion<=7)){
-        opcion = prompt
-        (`-----MENU----\n
-          1-Tipo de PC\n
-          2-Procesador\n
-          3-GPU\n
-          4-RAM\n
-          5-Tipo de Disco\n
-          6-ARMAR\n
-          6-SALIR\n
-          ---->Opcion: ` ); 
-      }
-      return opcion;
-}
 
-opcionTipo = () =>{
-    opcionTipo = Number(prompt('TIPO DE PC\n1-Notebook\n2-Escritorio\nIngrese una opcion: '));
-        while (opcionTipo != 1 && opcionTipo != 2) {
-            opcionTipo = Number(prompt('TIPO DE PC\n1-Notebook\n2-Escritorio\nIngrese una opcion: '));
+function programa() {
+    let opcion = prompt(`1- COMPRAR\n2- CARRITO\n3- SALIR`)
+    while ((opcion >= 1 && opcion <= 2)) {
+        switch (opcion) {
+            case '1': agregarCarrito(); break;
+            case '2': mostrarCarrito(); break;
+            default: break;
         }
-        opcionTipo == 1 ? tipoPc = 'Notebook' : tipoPc = 'Escritorio';
-}
-
-procesador = () =>{
-    procesador = prompt('Ingrese el tipo de un procesador, entre AMD o INTEL: ').toUpperCase();
-    while (!(procesador == 'AMD' || procesador == 'INTEL')) {
-        procesador = prompt('Ingrese el tipo de un procesador, entre AMD o INTEL: ').toUpperCase();
+        opcion = prompt(`1- COMPRAR\n2- CARRITO\n3- SALIR`)
     }
+    alert('HASTA LUEGO')
 }
 
-gpu = () =>{
-    gpu[0] = prompt('Ingrese marca de la GPU: ').toUpperCase();
-    gpu[1] = Number(prompt('Ingrese GB de la GPU: '));
-    while (!(gpu[1] >= 2 && gpu[1] <= 16)) {
-        alert('Error de GB GPU')
-        gpu[1] = Number(prompt('Ingrese GB de la GPU: '));
-    };
-} 
-
-ram = () =>{
-    ram[0] = prompt('Ingrese marca de la RAM: ').toUpperCase();
-    ram[1] = Number(prompt('Ingrese GB de la RAM'));
-    while (!(ram[1] >= 2 && ram[1] <= 16)) {
-        alert('Error de GB RAM')
-        ram[1] = prompt('Ingrese GB de la ram')
+function agregarCarrito() {
+    let productoElegido = mostrarProductos() - 1;
+    console.log(productoElegido)
+    buscarProducto(productos[productoElegido]);
+}
+function mostrarProductos() {
+    let menuCompra = `        PRODUCTO          PRECIO    \n`;
+    let cantidad = 1;
+    productos.forEach(producto => {
+        menuCompra += cantidad++ + '-    ' + producto.nombre + '          ' + '$' + producto.precio + '\n';
+    })
+    menuCompra += '\nQue desea Comprar?'
+    let producto = prompt(menuCompra);
+    while (!(producto >= 1 && producto <= cantidad)) {
+        producto = prompt(menuCompra);
     }
+    return producto;
 }
-
-tipoDisco = () =>{ 
-    prompt('Ingrese el tipo de disco: ').toUpperCase();
-    if (tipoDisco != 'SSD' && tipoDisco != 'HDD') {
-        tipoDisco = prompt('Ingrese el tipo de disco: ').toUpperCase();
+function buscarProducto(productoElegido) {
+    productos.find(producto => producto.id == productoElegido.id)
+    if (productos === undefined)
+        alert('No encontre nada')
+    else {
+        let cantidad = prompt('Cuantos desea comprar? ')
+        let producto1 = new ProductoACarrito(productoElegido, cantidad)
+        carrito.push(producto1)
+        alert('PRODUCTO AGREGADO A CARRITO')
     }
+
 }
 
-cargarDatosPc=()=>{
-    if(tipoPc.length==0||procesador.length==0||gpu.length==0||ram.length==0||tipoDisco.length==0)
-        alert('BUENO PERO MIRA QUE TE FALTAN PONER COSAS TODAVIA');      
-    else
-        alert('PC ARMADA');
-} 
+function mostrarCarrito() {
+    let mensaje = '';
+    let total = 0;
+
+    for (let i = 0; i < carrito.length; i++) {
+        mensaje += '* ' + carrito[i].producto.nombre + '     $' + carrito[i].producto.precio + '         Cantidad:' + carrito[i].cantidad + '\n';
+        total += carrito[i].cantidad * carrito[i].producto.precio;
+    }
+    alert(mensaje + '\n' + 'TOTAL:  $' + total);
+
+}
+
+programa();
