@@ -27,7 +27,7 @@ function programa() {
     let opcion = prompt(`1- COMPRAR\n2- CARRITO\n3- SALIR`)
     while ((opcion >= 1 && opcion <= 2)) {
         switch (opcion) {
-            case '1': agregarCarrito(); break;
+            case '1': elegirProducto(); break;
             case '2': mostrarCarrito(); break;
             default: break;
         }
@@ -36,10 +36,21 @@ function programa() {
     alert('HASTA LUEGO')
 }
 
-function agregarCarrito() {
+function elegirProducto() {
     let productoElegido = mostrarProductos() - 1;
-    console.log(productoElegido)
     buscarProducto(productos[productoElegido]);
+}
+function buscarProducto(productoElegido) {
+    productos.find(producto => producto.id == productoElegido.id)
+    if (productos === undefined)
+        alert('No encontre nada')
+    else {
+        let cantidad = prompt('Cuantos desea comprar? ')
+        let producto1 = new ProductoACarrito(productoElegido, cantidad)
+        carrito.push(producto1)
+        alert('PRODUCTO AGREGADO A CARRITO')
+    }
+
 }
 function mostrarProductos() {
     let menuCompra = `        PRODUCTO          PRECIO    \n`;
@@ -54,18 +65,6 @@ function mostrarProductos() {
     }
     return producto;
 }
-function buscarProducto(productoElegido) {
-    productos.find(producto => producto.id == productoElegido.id)
-    if (productos === undefined)
-        alert('No encontre nada')
-    else {
-        let cantidad = prompt('Cuantos desea comprar? ')
-        let producto1 = new ProductoACarrito(productoElegido, cantidad)
-        carrito.push(producto1)
-        alert('PRODUCTO AGREGADO A CARRITO')
-    }
-
-}
 
 function mostrarCarrito() {
     let mensaje = '';
@@ -76,7 +75,6 @@ function mostrarCarrito() {
         total += carrito[i].cantidad * carrito[i].producto.precio;
     }
     alert(mensaje + '\n' + 'TOTAL:  $' + total);
-
 }
 
 programa();
