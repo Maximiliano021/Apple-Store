@@ -1,2 +1,2 @@
-# Modern-Gamer
+# Apple-Store
 Proyecto para CODERHOUSE con Javascript
