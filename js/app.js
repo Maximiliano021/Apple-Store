@@ -1,80 +1,97 @@
-const carrito = [];
-function randomId() {
-    return Math.random().toString(36).substr(2, 9);
-};
+const btnBuy = document.getElementById("buy")
+const carritoCanvas = document.getElementById('lista-carrito')
+const spanCantidadProd = document.querySelector('.cantidad-prod');
+const btnCarrito = document.querySelector('.btn-cart');
 
 class Producto {
-    constructor(nombre, precio, id) {
-        this.nombre = nombre;
-        this.precio = precio;
+    constructor(nombre, srcImagen, precio, id) {
         this.id = id;
+        this.nombre = nombre;
+        this.srcImagen = srcImagen;
+        this.precio = precio;
     }
 }
-class ProductoACarrito {
+
+class productoACarrito {
     constructor(producto, cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
     }
 }
 
-const MacBook = new Producto('MacBook Pro', 25000, randomId())
-const Iphone14 = new Producto('Iphone 14', 5000, randomId())
-const Ipad = new Producto('Ipad Pro', 21000, randomId())
-const productos = [MacBook, Iphone14, Ipad];
+let carrito = [];
 
 
-function programa() {
-    let opcion = prompt(`1- COMPRAR\n2- CARRITO\n3- SALIR`)
-    while ((opcion >= 1 && opcion <= 2)) {
-        switch (opcion) {
-            case '1': elegirProducto(); break;
-            case '2': mostrarCarrito(); break;
-            default: break;
-        }
-        opcion = prompt(`1- COMPRAR\n2- CARRITO\n3- SALIR`)
+function app() {
+    asignarId()
+    document.addEventListener('click', agregarCarrito);
+}
+
+function agregarCarrito(e) {
+    const elementoSeleccionado = e.target;
+    let productoSeleccionado;
+    e.preventDefault();
+    if (e.target.classList.contains('card-buy')) {
+        carrito.length==0 ? btnCarrito.click() : '' ;
+        spanCantidadProd.textContent == '' ? spanCantidadProd.textContent = 1 : spanCantidadProd.textContent++;
+        productoSeleccionado = elementoSeleccionado.parentElement.parentElement.parentElement;
+        leerDatosCurso(productoSeleccionado);
     }
-    alert('HASTA LUEGO')
 }
 
-function elegirProducto() {
-    let productoElegido = mostrarProductos() - 1;
-    buscarProducto(productos[productoElegido]);
+function leerDatosCurso(producto) {
+    let nombre = producto.querySelector('.card-title').textContent;
+    let imagen = producto.querySelector('img').src;
+    let precio = producto.querySelector('.precio').textContent;
+    let id = producto.id;
+    const nuevoProducto = new Producto(nombre, imagen, precio, id);
+    actualizarCarrito(nuevoProducto);
 }
-function buscarProducto(productoElegido) {
-    productos.find(producto => producto.id == productoElegido.id)
-    if (productos === undefined)
-        alert('No encontre nada')
+
+function actualizarCarrito(nuevoProducto) {
+    const prodEncontrado = carrito.find(prod => prod.producto.id == nuevoProducto.id)
+    if (prodEncontrado != undefined)
+        prodEncontrado.cantidad++;
     else {
-        let cantidad = prompt('Cuantos desea comprar? ')
-        let producto1 = new ProductoACarrito(productoElegido, cantidad)
-        carrito.push(producto1)
-        alert('PRODUCTO AGREGADO A CARRITO')
+        const cargarProducto = new productoACarrito(nuevoProducto, 1);
+        carrito.push(cargarProducto)
     }
-
+    carritoUI();
 }
-function mostrarProductos() {
-    let menuCompra = `        PRODUCTO          PRECIO    \n`;
-    let cantidad = 1;
-    productos.forEach(producto => {
-        menuCompra += cantidad++ + '-    ' + producto.nombre + '          ' + '$' + producto.precio + '\n';
+
+function carritoUI() {
+    limpiarCarrito = () => {
+        carritoCanvas.innerHTML = ''
+    }
+    limpiarCarrito();
+    carrito.forEach(prod => {
+        let detalleProducto = document.createElement('div')
+        detalleProducto.innerHTML = `
+        <div class="producto-carrito" id="${prod.producto.id}">
+            <div class="d-flex justify-content-between">
+            <img src="${prod.producto.srcImagen}" style="width:70px;" alt="...">
+            <h5 class="card-title fw-bold text-center">${prod.producto.nombre}</h5>
+            <button type="button" class="btn-close" aria-label="Close"></button>
+            </div>
+            <div class="d-block m-2">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
+                <label>Cantidad</label>
+                <input style="width:50px" class="mx-2" type="number" value="${prod.cantidad}">
+                </div>
+                <span class="fw-bold precio fs-5">${prod.producto.precio}</span>
+            </div>
+            </div>
+        </div>`
+        carritoCanvas.append(detalleProducto);
     })
-    menuCompra += '\nQue desea Comprar?'
-    let producto = prompt(menuCompra);
-    while (!(producto >= 1 && producto <= cantidad)) {
-        producto = prompt(menuCompra);
-    }
-    return producto;
 }
 
-function mostrarCarrito() {
-    let mensaje = '';
-    let total = 0;
-
-    for (let i = 0; i < carrito.length; i++) {
-        mensaje += '* ' + carrito[i].producto.nombre + '     $' + carrito[i].producto.precio + '         Cantidad:' + carrito[i].cantidad + '\n';
-        total += carrito[i].cantidad * carrito[i].producto.precio;
-    }
-    alert(mensaje + '\n' + 'TOTAL:  $' + total);
+function asignarId() {
+    const productoArray = document.querySelectorAll('.producto');
+    productoArray.forEach(prod => {
+        prod.querySelector('.card').id = Math.random().toString(36).substr(2, 9);;
+    })
 }
 
-programa();
+app();
