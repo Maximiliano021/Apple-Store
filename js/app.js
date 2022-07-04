@@ -38,16 +38,13 @@ function app() {
 let crearHTML = () => {
     let main = document.createElement('div');
     main.innerHTML = `
-        <div class="container">
-            <div class="row m-4 main container">                           
-                </div>
-                </div>
+        <div class="row m-4 main container">                           
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">COMPRA</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                         </div>
@@ -55,8 +52,8 @@ let crearHTML = () => {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>`;
+    main.classList.add('container')
     document.querySelector('body').append(main);
     mainHTML = document.querySelector('.main');
     mostrarProductos();
@@ -68,9 +65,10 @@ function eventoClick(e) {
         let productoDevuelto = productos.find(e => e.id == elementoSeleccionado.id);
         elementoSeleccionado.classList.contains('buy-prod') ? actualizarCarrito(productoDevuelto) : btnCarrito.click(); detalleProducto(productoDevuelto);
     }
-    if (elementoSeleccionado.classList.contains('btn-deleteProd')){
+    if (elementoSeleccionado.classList.contains('btn-deleteProd'))
         eliminarCarritoUI(elementoSeleccionado);
-    }
+    if (elementoSeleccionado.classList.contains('no-buy'))
+        btnCloseCanvas.click()
 }
 
 
@@ -88,11 +86,8 @@ function actualizarCarrito(nuevoProducto) {
 }
 
 function carritoUI() {
-    limpiarCarrito = () => {
-        carritoCanvas.innerHTML = '';
-    }
-    limpiarCarrito();
-    let totalCantidad = 0;
+    carritoCanvas.innerHTML = '';
+    totalCantidad = 0;
        
     carrito.forEach(prod => {
         let detalleProducto = document.createElement('div')
@@ -115,7 +110,8 @@ function carritoUI() {
         detalleProducto.classList.add('producto-carrito');
         carritoCanvas.append(detalleProducto);
     })
-    spanCantidadProd.textContent = totalCantidad;
+    totalCantidad==0? spanCantidadProd.textContent = '' 
+    : spanCantidadProd.textContent = totalCantidad;
 }
 
 function mostrarProductos() {
@@ -146,6 +142,7 @@ function mostrarProductos() {
         carritoCanvas = document.getElementById('lista-carrito');
         spanCantidadProd = document.querySelector('.cantidad-prod');
         btnCarrito = document.querySelector('.btn-cart');
+        btnCloseCanvas = document.querySelector('.close-canvas')
     })
 }
 
@@ -164,14 +161,15 @@ function inputCantidad(e) {
 
 function detalleProducto(selectProducto) {
     let modalBody = document.querySelector('.modal-body');
-    let footer = document.querySelector(".modal-footer");
+    let modalFooter = document.querySelector(".modal-footer");
     let detalle = document.createElement('div');
-    footer.textContent = '';
+    document.querySelector('.close-modal').click();
+    
+    modalFooter.textContent = '';
     modalBody.textContent = '';
-
-    footer.innerHTML = `
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary buy-prod" id="${selectProducto.id}">Agregar</button>
+    modalFooter.innerHTML = `
+        <button type="button" class="btn btn-secondary no-buy" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary buy-prod" data-bs-dismiss="modal" id="${selectProducto.id}">Aceptar</button>
         `;
     detalle.innerHTML = `
         <div class="row">
