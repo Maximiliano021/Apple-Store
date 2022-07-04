@@ -1,6 +1,5 @@
 @import url('http://fonts.cdnfonts.com/css/sf-pro-display');
 
-
 * {
     margin: 0;
     padding: 0;
@@ -124,6 +123,10 @@ a:hover {
 
 .img-prod-carrito{
     width:60px;
+}
+
+.categoria{
+    margin-bottom: 3rem;
 }
 
 @media (max-width:768px) {
