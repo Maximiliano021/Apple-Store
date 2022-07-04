@@ -6,7 +6,6 @@
     box-sizing: border-box
 }
 
-
 body {
     font-family: 'SF Pro Display', Helvetica, Arial, sans-serif;
     background-color: #f2f2f4;
@@ -106,9 +105,8 @@ a:hover {
 
 .cantidad-prod {
     position: absolute;
-    color: white;
+    color: #fff;
     transform: translate(60px, -5px);
-    transition: 2s;
 }
 
 .producto-carrito {
