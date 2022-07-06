@@ -43,6 +43,7 @@ class productoACarrito {
 function app() {
     crearHTML();
     asignarClassId();
+    carritoUI();
     document.addEventListener('click', eventoClick);
 }
 
@@ -76,6 +77,7 @@ let crearHTML = () => {
     main.classList.add('container')
     document.querySelector('body').append(main);
     mostrarProductos();
+    carrito = JSON.parse( localStorage.getItem('carrito') || [] )
 }
 
 function eventoClick(e) {
@@ -101,16 +103,17 @@ function eventoClick(e) {
     }
 }
 
-
 function actualizarCarrito(nuevoProducto) {
     const prodEncontrado = carrito.find(prod => prod.producto.id == nuevoProducto.id)
     if (prodEncontrado != undefined) {
         prodEncontrado.cantidad++;
         prodEncontrado.calcularTotal();
+        sincronizarLocalStorage();
     }
     else {
         const cargarProducto = new productoACarrito(nuevoProducto, 1);
-        carrito.push(cargarProducto)
+        carrito.push(cargarProducto);
+        sincronizarLocalStorage();
     }
     carritoUI();
 }
@@ -221,8 +224,9 @@ function detalleProducto(selectProducto) {
 function eliminarCarrito(elemento) {
     let prodCarrito = carrito.find(prod => prod.producto.id == elemento.id)
     carrito = carrito.filter(prod => prod.producto.id != prodCarrito.producto.id)
+    sincronizarLocalStorage();
     carritoUI();
-}
+}   
 
 function lorem() {
     return "Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum has been the industry's standard dummy text ever since."
@@ -239,5 +243,11 @@ function asignarClassId(){
 
     carritoCanvas = document.getElementById('lista-carrito');
 }
+
+function sincronizarLocalStorage(){
+    localStorage.setItem('carrito',JSON.stringify(carrito));
+}
+
+
 
 app();
