@@ -81,6 +81,7 @@ let crearHTML = () => {
 function eventoClick(e) {
     let targetSelect = e.target;
     if ( targetSelect.classList.contains('agregar') || (targetSelect.classList.contains('buy-prod')) ) {
+        e.preventDefault();
         let productoDevuelto = productos.find(e => e.id == targetSelect.id);
         targetSelect.classList.contains('buy-prod') ? actualizarCarrito(productoDevuelto) 
         : btnCarrito.click(); detalleProducto(productoDevuelto);
@@ -152,22 +153,21 @@ function mostrarProductos() {
         productoHTML = document.createElement('div');
 
         productoHTML.innerHTML = `
-            <div class="card" style="width: 16rem;" <div class="card" style="width: 16rem;" data-aos="fade-zoom-in"
-                data-aos-delay="${delay}">
-                <div class="bg-white contain-img p-3">
+            <div class="card bg-transparent" style="width: 16rem;" data-aos="fade-zoom-in" data-aos-delay="${delay}">
+                <div class="contain-img p-3 bg-white">
                 <img src="${producto.srcImagen}" class="card-img-top prod-img" alt="...">
                 </div>
-                <div class="card-body">
+                <div class="card-body ">
                 <h5 class="card-title fw-bold text-center">${producto.nombre}</h5>
                 <p class="card-text fw-light">and make up the bulk of the card's content.</p>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-items-center">
                     <span class="fw-bold precio fs-6">$${producto.precio} USD</span>
-                    <button type="button" id="${producto.id}" class="btn btn-primary agregar" data-bs-toggle="modal" data-bs-target="#exampleModal">AGREGAR</button>
+                    <button type="button" id="${producto.id}" class="btn btn-primary agregar" data-bs-toggle="modal" data-bs-target="#exampleModal">COMPRAR</button>
                 </div>
                 </div>
                 </div>
             </div>`;
-        delay == 300 ? delay = 100 : delay += 100;
+        delay == 400 ? delay = 100 : delay += 150;
         contentCagoria.innerHTML = `<h3 class="fw-bolder">LO MEJOR DE LA CATEGORIA ${producto.categoria}</h3><p class="w-50">${lorem()}</p>`;
         
         if (categoria.textContent == '')
@@ -197,7 +197,7 @@ function detalleProducto(selectProducto) {
                 <h2 class="description-title mb-4">${selectProducto.nombre}</h2>
                 <p class="text-black-50 mb-3">${lorem()}</p>
                 <div class="col-12 col-lg-6 d-lg-block d-flex justify-content-lg-center justify-content-between  align-items-center">
-                <div class="col-5 my-1 d-flex justify-content-lg-start justify-content-between align-items-center ">
+                <div class="col-5 my-1 d-flex justify-content-lg-start justify-content-between align-items-center">
                     <span class="fs-3 text-black precio fw-bold">${selectProducto.precio}</span>
                     <label class="text-center descuento mx-3 pb-1 pe-2 ps-2">50%</label>
                 </div>
@@ -206,13 +206,14 @@ function detalleProducto(selectProducto) {
             </div>
             <form class="mx-auto my-lg-0 mx-lg-0 d-lg-flex d-block justify-content-start col-10 col-lg-12 align-items-center">
                 <div class="d-flex justify-content-lg-center justify-content-between">
-                    <input class="w-50 buy-value text-center" type="number" value="0" placeholder="0">
+                    <button class="btn btn-primary buy-prod" id="${selectProducto.id}">
+                      AGREGAR
+                  </button>
                 </div>
-                <button type="button" class="btn btn-primary buy-prod" data-bs-dismiss="modal" id="${selectProducto.id}">Agregar</button>
             </form>
             </div>
         </div>`;
-        
+    
     detalle.classList.add('container');
     modalBody.append(detalle);
 }
