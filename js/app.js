@@ -26,7 +26,7 @@ const productos = [
     new Producto("Smartwatch T500", "https://plazavea.vteximg.com.br/arquivos/ids/544277-450-450/image-09490433aa744fc8a7f3c3f500ae28c5.jpg?v=637424726292200000", 92.361, "RELOJ", 12),
     new Producto("Airpod Pro", "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MWP22?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1591634795000", 51.213, "AURICULAR", 13),
     new Producto("Airpod Pro 2", "http://ciber-king.com/wp-content/uploads/2021/07/Airpods.jpg", 51.213, "AURICULAR", 14),
-    new Producto("Airpod Pro 2da Generacion", "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/airpods-gen3-key-features-design-202110_FMT_WHH?wid=506&hei=636&fmt=png-alpha&.v=1632934708000", 51.213, "AURICULAR", 15),
+    new Producto("Airpod 2da Generacion", "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/airpods-gen3-key-features-design-202110_FMT_WHH?wid=506&hei=636&fmt=png-alpha&.v=1632934708000", 51.213, "AURICULAR", 15),
 ]
 
 class productoACarrito {
@@ -43,7 +43,7 @@ class productoACarrito {
 function app() {
     crearHTML();
     asignarClassId();
-    carritoUI();
+    document.addEventListener('DOMContentLoaded',iniciarLocalStorage);
     document.addEventListener('click', eventoClick);
 }
 
@@ -77,7 +77,6 @@ let crearHTML = () => {
     main.classList.add('container')
     document.querySelector('body').append(main);
     mostrarProductos();
-    carrito = JSON.parse( localStorage.getItem('carrito') || [] )
 }
 
 function eventoClick(e) {
@@ -107,7 +106,7 @@ function actualizarCarrito(nuevoProducto) {
     const prodEncontrado = carrito.find(prod => prod.producto.id == nuevoProducto.id)
     if (prodEncontrado != undefined) {
         prodEncontrado.cantidad++;
-        prodEncontrado.calcularTotal();
+        prodEncontrado.calcularTotal;
         sincronizarLocalStorage();
     }
     else {
@@ -119,6 +118,7 @@ function actualizarCarrito(nuevoProducto) {
 }
 
 function carritoUI() {
+    
     let detalleProducto;
     carritoCanvas.innerHTML = '';
     let totalCantidad = 0;
@@ -242,6 +242,11 @@ function asignarClassId(){
     btnCloseCanvas = document.querySelector('.close-canvas');
 
     carritoCanvas = document.getElementById('lista-carrito');
+}
+
+function iniciarLocalStorage(){
+    carrito = JSON.parse( localStorage.getItem('carrito') ) || [];
+    carrito != []? carritoUI() : '';
 }
 
 function sincronizarLocalStorage(){
