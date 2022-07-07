@@ -75,7 +75,7 @@ let crearHTML = () => {
             <div class="categoria all-productos"></div>
         </div>`;
     main.classList.add('container')
-    document.querySelector('body').append(main);
+    document.querySelector('.content').append(main);
     mostrarProductos();
 }
 
