@@ -38,24 +38,27 @@ li {
     border: none;
     text-decoration: none;
     font-style: none;
+    opacity: 1;
+}
+.btn:hover{
+    opacity: 0.9;
 }
 .btn:focus{
-    box-shadow: none;
-}
-.page{
-    border-radius: 7px;
-    box-shadow: 2px 4px 12px rgb(0 0 0 / 12%);
-    background-color: #f2f2f4;
-
-}
-.buy-prod{
-    padding:6px 15px;
+    box-shadow: none !important;
 }
 .btn-cart {
     padding-left: 2rem;
 }
 .btn-primary{
     background-color: #0071e3;
+}
+.page{
+    border-radius: 7px;
+    box-shadow: 2px 4px 12px rgb(0 0 0 / 12%);
+    background-color: #f2f2f4;
+}
+.buy-prod{
+    padding:6px 15px;
 }
 
 .contain-img, .offcanvas {
@@ -117,9 +120,8 @@ a:hover {
     border-bottom: solid 0.2px rgb(215, 213, 213);
     padding: 0.5rem;
 }
-.offcanvas-header{
+.offcanvas-header, .offcanvas-footer{
     background-color: rgb(34, 34, 34);
-    text-align: center;
     color: #fff;
 }
 
@@ -195,7 +197,10 @@ a:hover {
     color:black;
 }
 
-
+.offcanvas-body{
+    align-content: space-between;
+    display:grid;
+}
 
 
 
