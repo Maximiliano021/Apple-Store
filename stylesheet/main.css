@@ -6,9 +6,14 @@
     box-sizing: border-box
 }
 
+.error{
+    margin: auto;
+} 
+
 body {
     font-family: 'SF Pro Display', Helvetica, Arial, sans-serif;
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    background-repeat: no-repeat;
 }
 
 header {
@@ -136,58 +141,6 @@ a:hover {
 .precio{
     height: 25px;
 }
-/* .buy-prod {
-    font-family: inherit;
-    font-size: 20px;
-    background: royalblue;
-    color: white;
-    padding: 0.4em 0.5em;
-    padding-left: 0.8em;
-    display: flex;
-    align-items: center;
-    border: none;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.2s;
-   }
-   
-   .buy-prod span {
-    display: block;
-    margin-left: 0.3em;
-    transition: all 0.3s ease-in-out;
-   }
-   
-   .buy-prod svg {
-    display: block;
-    transform-origin: center center;
-    transition: transform 0.3s ease-in-out;
-   }
-   
-   .buy-prod:hover .svg-wrapper {
-    animation: fly-1 0.6s ease-in-out infinite alternate;
-   }
-   
-   .buy-prod:hover svg {
-    transform: translateX(2.1em) rotate(45deg) scale(1.2);
-   }
-   
-   .buy-prod:hover span {
-    transform: translateX(5em);
-   }
-   
-   .buy-prod:active {
-    transform: scale(0.95);
-   }
-   
-   @keyframes fly-1 {
-    from {
-     transform: translateY(0.1em);
-    }
-   
-    to {
-     transform: translateY(-0.1em);
-    }
-   } */
 
 .footer{
     border-top: 1px solid #dce5e2;

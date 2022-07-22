@@ -1,5 +1,6 @@
-let btnBuy, carritoCanvas, spanCantidadProd, btnCarrito, mainHTML, allProductos, modalBody, modalFooter, detalle,valorClick;
+let btnBuy, carritoCanvas, spanCantidadProd, btnCarrito, mainHTML, allProductos, modalBody, modalFooter, detalle, valorClick;
 let carrito = [];
+const productos = [];
 
 class Producto {
     constructor(nombre, srcImagen, precio, categoria, id) {
@@ -10,24 +11,6 @@ class Producto {
         this.id = id;
     }
 }
-
-const productos = [
-    new Producto("iPhone 13", "./assets/Iphone13.png", 110.182, "CELULAR", 1),
-    new Producto("iPhone 12 PLUS", "./assets/Iphone12.png", 95.5282, "CELULAR", 2),
-    new Producto("iPhone 10", "./assets/Iphone10.jpg", 90.5182, "CELULAR", 3),
-    new Producto("MacBook Pro 13", "./assets/MacBookPro13.png", 120.299, "NOTEBOOK", 4),
-    new Producto("MacBook Pro MAX", "./assets/MacBookProMax.png", 150.519, "NOTEBOOK", 5),
-    new Producto("MacBook Air M1", "./assets/MacBookAir.png", 250.429, "NOTEBOOK", 6),
-    new Producto("iPad Pro Plus", "./assets/IpadProPlus.png", 10.206, "IPAD", 7),
-    new Producto("iPad Pro 2", "./assets/IpadPro2.png", 9.119, "IPAD", 8),
-    new Producto("iPad Plus", "./assets/IPadPlus.jpg", 10.119, "IPAD", 9),
-    new Producto("Smartwatch FK88", "./assets/SmartwatchFK88.png", 92.361, "RELOJ", 10),
-    new Producto("Smartwatch T500", "./assets/SmartwatchT500.png", 92.361, "RELOJ", 11),
-    new Producto("Smartwatch Series 7", "./assets/SmartWatchSeries7.png", 92.361, "RELOJ", 12),
-    new Producto("Airpod Pro", "./assets/AirpodPro.png", 51.213, "AURICULAR", 13),
-    new Producto("Airpod Pro 1", "./assets/Airpods1.jpg", 51.213, "AURICULAR", 14),
-    new Producto("Airpod 2da Generacion", "./assets/Airpod2daGeneracion.png", 51.213, "AURICULAR", 15),
-]
 
 class productoACarrito {
     constructor(producto, cantidad) {
@@ -40,14 +23,26 @@ class productoACarrito {
     }
 }
 
-function app() {
+function getJSON() {
+    fetch('js/JSONproductos.json')
+        .then(res => res.json())
+        .then(producto => {
+            producto.forEach((prod) => {
+            productos.push(prod);
+            });
+            initiatePage();
+        })
+        .catch(() => error404());
+}
+
+const initiatePage = () => {
     crearHTML();
+    mostrarProductos();
     asignarClassId();
-    document.addEventListener('DOMContentLoaded',iniciarLocalStorage);
     document.addEventListener('click', eventoClick);
 }
 
-let crearHTML = () => {
+function crearHTML(){
     let main = document.createElement('div');
     main.innerHTML = `
         <div class="row m-4 container">                           
@@ -76,11 +71,11 @@ let crearHTML = () => {
         </div>`;
     main.classList.add('container')
     document.querySelector('.content').append(main);
-    mostrarProductos();
+    document.addEventListener('DOMContentLoaded', iniciarLocalStorage);
 }
 
 function mostrarProductos() {
-    let delay = 100,contentCagoria, categoria;
+    let delay = 100, contentCagoria, categoria;
     productos.forEach(producto => {
         categoria = document.getElementById(`${producto.categoria}`);
         contentCagoria = document.createElement('div');
@@ -103,10 +98,10 @@ function mostrarProductos() {
             </div>`;
         delay == 300 ? delay = 100 : delay += 100;
         contentCagoria.innerHTML = `<h3 class="fw-bolder">LO MEJOR DE LA CATEGORIA ${producto.categoria}</h3><p class="w-50">${lorem()}</p>`;
-        
+
         if (categoria.textContent == '')
             categoria.append(contentCagoria);
-        
+
         productoHTML.classList.add('col', 'producto');
         categoria.append(productoHTML);
     })
@@ -114,21 +109,21 @@ function mostrarProductos() {
 
 function eventoClick(e) {
     targetSelect = e.target;
-    
+
     /* Encontrar el producto en la matriz de productos y luego actualizar el carrito. */
-    if ( targetSelect.classList.contains('agregar') || (targetSelect.classList.contains('buy-prod')) ) {
-        e.preventDefault();        
+    if (targetSelect.classList.contains('agregar') || (targetSelect.classList.contains('buy-prod'))) {
+        e.preventDefault();
         let productoDevuelto = productos.find(e => e.id == targetSelect.id);
-        targetSelect.classList.contains('buy-prod') ? actualizarCarrito(productoDevuelto) 
-        : btnCarrito.click(); detalleProducto(productoDevuelto);
+        targetSelect.classList.contains('buy-prod') ? actualizarCarrito(productoDevuelto)
+            : btnCarrito.click(); detalleProducto(productoDevuelto);
     }
-    if ( targetSelect.classList.contains('btn-deleteProd' ))
+    if (targetSelect.classList.contains('btn-deleteProd'))
         eliminarCarrito(targetSelect);
 
     if (targetSelect.classList.contains('no-buy'))
         btnCloseCanvas.click() //cerramos canvas;
 
-    if ( targetSelect.classList.contains('inputCantidad' )) {
+    if (targetSelect.classList.contains('inputCantidad')) {
         const nuevoValor = targetSelect.value;
         const elegido = carrito.find(e => e.producto.id == targetSelect.id)
         if (nuevoValor != '') {
@@ -183,12 +178,12 @@ function carritoUI() {
         carritoCanvas.append(detalleProducto);
     })
     let totalSuma = 0;
-    carrito.map(prod=> totalSuma+= prod.producto.precio*prod.cantidad)
+    carrito.map(prod => totalSuma += prod.producto.precio * prod.cantidad)
     document.getElementById('totalCarrito').textContent = totalSuma;
 
     //actualiza cantidad de productos en carrito por HTML
     totalCantidad == 0 ? spanCantidadProd.textContent = ''
-    : spanCantidadProd.textContent = totalCantidad;
+        : spanCantidadProd.textContent = totalCantidad;
 }
 
 function detalleProducto(selectProducto) {
@@ -226,7 +221,7 @@ function detalleProducto(selectProducto) {
             </form>
             </div>
         </div>`;
-    
+
     detalle.classList.add('container');
     modalBody.append(detalle);
 }
@@ -236,13 +231,13 @@ function eliminarCarrito(elemento) {
     carrito = carrito.filter(prod => prod.producto.id != prodCarrito.producto.id)
     sincronizarLocalStorage();
     carritoUI();
-}   
+}
 
 function lorem() {
     return "Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum has been the industry's standard dummy text ever since."
 }
 
-function asignarClassId(){
+function asignarClassId() {
     modalBody = document.querySelector('.modal-body')
     modalFooter = document.querySelector('.modal-footer')
     spanCantidadProd = document.querySelector('.cantidad-prod');
@@ -254,21 +249,29 @@ function asignarClassId(){
     carritoCanvas = document.getElementById('lista-carrito');
 }
 
-function iniciarLocalStorage(){
-    carrito = JSON.parse( localStorage.getItem('carrito') ) || [];
-    carrito != []? carritoUI() : '';
+function iniciarLocalStorage() {
+    carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    carrito != [] ? carritoUI() : '';
 }
 
-function sincronizarLocalStorage(){
+function sincronizarLocalStorage() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
-function mostrarAlert(mensaje){
+function mostrarAlert(mensaje) {
     Toastify({
-        text: mensaje, 
+        text: mensaje,
         duration: 1000,
         position: "center"
-        }).showToast();
+    }).showToast();
 }
 
-app();
+const error404 = () => {
+    document.querySelector('body').innerHTML = '';
+    document.querySelector('body').classList.add('d-flex','text-center', 'vh-100');
+    const error = document.createElement('div');
+    error.innerHTML = `<h1>ERROR 404</h1><p>Page not found</p>`;
+    error.classList.add('error');
+    document.querySelector('body').append(error);
+}
+getJSON();
