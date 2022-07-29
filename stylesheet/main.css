@@ -14,6 +14,7 @@ body {
     font-family: 'SF Pro Display', Helvetica, Arial, sans-serif;
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
     background-repeat: no-repeat;
+    cursor:url(../ilustrations/cursor.png),pointer;
 }
 
 header {
