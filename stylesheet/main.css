@@ -131,12 +131,16 @@ a:hover {
     color: #fff;
 }
 
+.offcanvas-footer{
+    padding:1rem 0.5rem;
+}
+
 .img-prod-carrito{
     width:60px;
 }
 
 .categoria{
-    margin-bottom: 3rem;
+    padding: 3rem 0;
 }
 
 .precio{

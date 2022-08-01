@@ -1,33 +1,7 @@
-let btnBuy, carritoCanvas, spanCantidadProd, btnCarrito, mainHTML, allProductos, modalBody, modalFooter, detalle,valorClick;
-let carrito = [];
+let btnBuy, carritoCanvas, spanCantidadProd, btnCarrito, mainHTML, allProductos, modalBody, modalFooter;
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-class Producto {
-    constructor(nombre, srcImagen, precio, categoria, id) {
-        this.nombre = nombre;
-        this.srcImagen = srcImagen;
-        this.precio = precio;
-        this.categoria = categoria;
-        this.id = id;
-    }
-}
-
-const productos = [
-    new Producto("iPhone 13", "./assets/Iphone13.png", 110.182, "CELULAR", 1),
-    new Producto("iPhone 12 PLUS", "./assets/Iphone12.png", 95.5282, "CELULAR", 2),
-    new Producto("iPhone 10", "./assets/Iphone10.jpg", 90.5182, "CELULAR", 3),
-    new Producto("MacBook Pro 13", "./assets/MacBookPro13.png", 120.299, "NOTEBOOK", 4),
-    new Producto("MacBook Pro MAX", "./assets/MacBookProMax.png", 150.519, "NOTEBOOK", 5),
-    new Producto("MacBook Air M1", "./assets/MacBookAir.png", 250.429, "NOTEBOOK", 6),
-    new Producto("iPad Pro Plus", "./assets/IpadProPlus.png", 10.206, "IPAD", 7),
-    new Producto("iPad Pro 2", "./assets/IpadPro2.png", 9.119, "IPAD", 8),
-    new Producto("iPad Plus", "./assets/IPadPlus.jpg", 10.119, "IPAD", 9),
-    new Producto("Smartwatch FK88", "./assets/SmartwatchFK88.png", 92.361, "RELOJ", 10),
-    new Producto("Smartwatch T500", "./assets/SmartwatchT500.png", 92.361, "RELOJ", 11),
-    new Producto("Smartwatch Series 7", "./assets/SmartWatchSeries7.png", 92.361, "RELOJ", 12),
-    new Producto("Airpod Pro", "./assets/AirpodPro.png", 51.213, "AURICULAR", 13),
-    new Producto("Airpod Pro 1", "./assets/Airpods1.jpg", 51.213, "AURICULAR", 14),
-    new Producto("Airpod 2da Generacion", "./assets/Airpod2daGeneracion.png", 51.213, "AURICULAR", 15),
-]
+const productos = [];
 
 class productoACarrito {
     constructor(producto, cantidad) {
@@ -37,47 +11,70 @@ class productoACarrito {
     }
 }
 
-function app() {
+getJSON();
+
+function getJSON() {
+    fetch('js/JSONproductos.json')
+        .then(res => res.json())
+        .then(producto => {
+            producto.forEach((prod) => {
+                productos.push(prod);
+            });
+            initiatePage();
+        })
+        .catch(() => error404());
+}
+
+const initiatePage = () => {
     crearHTML();
-    asignarClassId();
-    document.addEventListener('DOMContentLoaded',iniciarLocalStorage);
-    document.addEventListener('click', eventoClick);
+    carritoUI();
+    mostrarProductos();
+    document.addEventListener('click', eventosClick);
+}
+
+const error404 = () => {
+    document.querySelector('body').innerHTML = '';
+    document.querySelector('body').classList.add('d-flex', 'text-center', 'vh-100');
+    const error = document.createElement('div');
+    error.innerHTML = `<h1>ERROR 404</h1><p>Page not found</p>`;
+    error.classList.add('error');
+    document.querySelector('body').append(error);
 }
 
 let crearHTML = () => {
     let main = document.createElement('div');
     main.innerHTML = `
-        <div class="row m-4 container">                           
+        <div class="row mx-4 my-0 container">                           
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">COMPRA</h5>
-                        <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    
-                    </div>
-                    <div class="modal-footer">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">COMPRA</h5>
+                            <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="main" data-aos="fade-zoom-in" data-aos-delay="100">
-            <div class="categoria row" id="NOTEBOOK"></div>
-            <div class="categoria row" id="IPAD"></div>
-            <div class="categoria row" id="CELULAR"></div>
-            <div class="categoria row" id="RELOJ"></div>
-            <div class="categoria row" id="AURICULAR"></div>
-            <div class="categoria all-productos"></div>
+            <div class="main" data-aos="fade-zoom-in" data-aos-delay="100">
+                <div class="categoria row" id="NOTEBOOK"></div>
+                <div class="categoria row" id="IPAD"></div>
+                <div class="categoria row" id="CELULAR"></div>
+                <div class="categoria row" id="RELOJ"></div>
+                <div class="categoria row" id="AURICULAR"></div>
+                <div class="categoria all-productos"></div>
+            </div>
         </div>`;
     main.classList.add('container')
     document.querySelector('.content').append(main);
-    mostrarProductos();
+    asignarClassId();
 }
 
 function mostrarProductos() {
-    let delay = 100,contentCagoria, categoria;
+    let delay = 50, contentCagoria, categoria;
     productos.forEach(producto => {
         categoria = document.getElementById(`${producto.categoria}`);
         contentCagoria = document.createElement('div');
@@ -86,55 +83,50 @@ function mostrarProductos() {
         productoHTML.innerHTML = `
             <div class="card bg-transparent" style="width: 16rem;" data-aos="fade-zoom-in" data-aos-delay="${delay}">
                 <div class="contain-img p-3 bg-white">
-                <img src="${producto.srcImagen}" class="card-img-top prod-img" alt="${producto.nombre}">
+                    <img src="${producto.srcImagen}" class="card-img-top prod-img" alt="${producto.nombre}">
                 </div>
                 <div class="card-body ">
-                <h5 class="card-title fw-bold text-center">${producto.nombre}</h5>
-                <p class="card-text fw-light">and make up the bulk of the card's content.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold precio fs-6">$${producto.precio} USD</span>
-                    <button type="button" id="${producto.id}" class="btn btn-primary agregar" data-bs-toggle="modal" data-bs-target="#exampleModal">COMPRAR</button>
-                </div>
-                </div>
+                    <h5 class="card-title fw-bold text-center">${producto.nombre}</h5>
+                    <p class="card-text fw-light">and make up the bulk of the card's content.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold precio fs-6">$${producto.precio} USD</span>
+                        <button type="button" id="${producto.id}" class="btn btn-primary agregar" data-bs-toggle="modal" data-bs-target="#exampleModal">COMPRAR</button>
+                    </div>
                 </div>
             </div>`;
-        delay == 300 ? delay = 100 : delay += 100;
+        delay == 150 ? delay = 50 : delay += 50;
         contentCagoria.innerHTML = `<h3 class="fw-bolder">LO MEJOR DE LA CATEGORIA ${producto.categoria}</h3><p class="w-50">${lorem()}</p>`;
-        
+
         if (categoria.textContent == '')
             categoria.append(contentCagoria);
-        
+
         productoHTML.classList.add('col', 'producto');
         categoria.append(productoHTML);
     })
 }
 
-function eventoClick(e) {
-    targetSelect = e.target;
-    
-    /* Encontrar el producto en la matriz de productos y luego actualizar el carrito. */
-    if ( targetSelect.classList.contains('agregar') || (targetSelect.classList.contains('buy-prod')) ) {
-        e.preventDefault();        
-        let productoDevuelto = productos.find(e => e.id == targetSelect.id);
-        targetSelect.classList.contains('buy-prod') ? actualizarCarrito(productoDevuelto) 
-        : btnCarrito.click(); detalleProducto(productoDevuelto);
+function eventosClick(e) {
+    const targetSelect = e.target;
+    let productoDevuelto = productos.find(e => e.id == targetSelect.id);
+
+    if (targetSelect.classList.contains('buy-prod')) {
+        actualizarCarrito(productoDevuelto)
+        detalleProducto(productoDevuelto);
     }
-    if ( targetSelect.classList.contains('btn-deleteProd' ))
+
+    if (targetSelect.classList.contains('agregar')) {
+        abrirCanvas();
+        detalleProducto(productoDevuelto);
+    }
+
+    if (targetSelect.classList.contains('delete-prod'))
         eliminarCarrito(targetSelect);
 
     if (targetSelect.classList.contains('no-buy'))
-        btnCloseCanvas.click() //cerramos canvas;
+        btnCloseCanvas.click();
 
-    if ( targetSelect.classList.contains('inputCantidad' )) {
-        const nuevoValor = targetSelect.value;
-        const elegido = carrito.find(e => e.producto.id == targetSelect.id)
-        if (nuevoValor != '') {
-            elegido.cantidad = Number(nuevoValor)
-            elegido.precioTotal = (elegido.cantidad * elegido.producto.precio).toFixed(3); 
-            carritoUI();
-            sincronizarLocalStorage();
-        }
-    }
+    if (targetSelect.classList.contains('inputCantidad'))
+        actualizarInput(targetSelect);
 }
 
 function actualizarCarrito(nuevoProducto) {
@@ -154,16 +146,17 @@ function actualizarCarrito(nuevoProducto) {
 }
 
 function carritoUI() {
+    let totalSuma = 0;
+    let totalCantidad = 0;
     let detalleProducto;
     carritoCanvas.innerHTML = '';
-    let totalCantidad = 0;
     carrito.forEach(prod => {
         detalleProducto = document.createElement('div')
         detalleProducto.innerHTML = `
             <div class="d-flex justify-content-between">
                 <img src="${prod.producto.srcImagen}" class="img-prod-carrito" alt="...">
                 <h5 class="card-title fw-bold text-center">${prod.producto.nombre}</h5>
-                <button type="button" class="btn-close btn-deleteProd" id="${prod.producto.id}" aria-label="Close"></button>
+                <button type="button" class="btn-close delete-prod" id="${prod.producto.id}" aria-label="Close"></button>
                 </div>
                 <div class="d-block m-2">
                 <div class="d-flex justify-content-between">
@@ -171,20 +164,19 @@ function carritoUI() {
                     <label>Cantidad</label>
                     <input style="width:50px" class="mx-2 inputCantidad" id="${prod.producto.id}" type="number" min="1" value="${prod.cantidad}">
                     </div>
-                    <span class="fw-bold precio fs-5">$${prod.precioTotal} USD</span>
+                    <span class="fw-bold precio fs-5">$${prod.precioTotal}USD</span>
                 </div>
             </div>`;
         totalCantidad += prod.cantidad;
         detalleProducto.classList.add('producto-carrito');
         carritoCanvas.append(detalleProducto);
     })
-    let totalSuma = 0;
-    carrito.map(prod=> totalSuma+= prod.producto.precio*prod.cantidad)
-    document.getElementById('totalCarrito').textContent = totalSuma.toFixed(3);
+    carrito.map(prod => totalSuma += prod.producto.precio * prod.cantidad)
+    document.getElementById('totalCarrito').textContent = `$${totalSuma.toFixed(3)}`;
 
-    //actualiza cantidad de productos en carrito por HTML
+    //actualiza cantidad de productos en el html 
     totalCantidad == 0 ? spanCantidadProd.textContent = ''
-    : spanCantidadProd.textContent = totalCantidad;
+        : spanCantidadProd.textContent = totalCantidad;
 }
 
 function detalleProducto(selectProducto) {
@@ -222,7 +214,7 @@ function detalleProducto(selectProducto) {
             </form>
             </div>
         </div>`;
-    
+
     detalle.classList.add('container');
     modalBody.append(detalle);
 }
@@ -232,13 +224,13 @@ function eliminarCarrito(elemento) {
     carrito = carrito.filter(prod => prod.producto.id != prodCarrito.producto.id)
     sincronizarLocalStorage();
     carritoUI();
-}   
+}
 
 function lorem() {
     return "Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum has been the industry's standard dummy text ever since."
 }
 
-function asignarClassId(){
+function asignarClassId() {
     modalBody = document.querySelector('.modal-body')
     modalFooter = document.querySelector('.modal-footer')
     spanCantidadProd = document.querySelector('.cantidad-prod');
@@ -246,25 +238,30 @@ function asignarClassId(){
     mainHTML = document.querySelector('.main');
     allProductos = document.querySelector('.all-productos');
     btnCloseCanvas = document.querySelector('.close-canvas');
-
     carritoCanvas = document.getElementById('lista-carrito');
 }
 
-function iniciarLocalStorage(){
-    carrito = JSON.parse( localStorage.getItem('carrito') ) || [];
-    carrito != []? carritoUI() : '';
-}
 
-function sincronizarLocalStorage(){
+function sincronizarLocalStorage() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
-function mostrarAlert(mensaje){
+function mostrarAlert(mensaje) {
     Toastify({
-        text: mensaje, 
+        text: mensaje,
         duration: 1000,
         position: "center"
-        }).showToast();
+    }).showToast();
 }
 
-app();
+function actualizarInput(targetSelect) {
+    const elegido = carrito.find(e => e.producto.id == targetSelect.id);
+    if (targetSelect.value != '') {
+        elegido.cantidad = Number(targetSelect.value)
+        elegido.precioTotal = Number((elegido.cantidad * elegido.producto.precio).toFixed(3));
+        carritoUI();
+    }
+    sincronizarLocalStorage();
+}
+
+const abrirCanvas = () => btnCarrito.click();
