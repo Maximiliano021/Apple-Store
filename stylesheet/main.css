@@ -6,15 +6,23 @@
     box-sizing: border-box
 }
 
+.error{
+    margin: auto;
+} 
+
 body {
     font-family: 'SF Pro Display', Helvetica, Arial, sans-serif;
-    background-color: #f2f2f4;
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    background-repeat: no-repeat;
+    cursor:url(../ilustrations/cursor.png),pointer;
 }
 
 header {
-    background-color: #000;
+    background-color: rgb(34, 34, 34);
     padding: 0 1rem 0 1rem;
     z-index: 1;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 li {
@@ -36,13 +44,13 @@ li {
     border: none;
     text-decoration: none;
     font-style: none;
+    opacity: 1;
+}
+.btn:hover{
+    opacity: 0.9;
 }
 .btn:focus{
-    box-shadow: none;
-}
-
-.buy-prod{
-    padding:6px 15px;
+    box-shadow: none !important;
 }
 .btn-cart {
     padding-left: 2rem;
@@ -50,9 +58,17 @@ li {
 .btn-primary{
     background-color: #0071e3;
 }
+.page{
+    border-radius: 7px;
+    box-shadow: 2px 4px 12px rgb(0 0 0 / 12%);
+    background-color: #f2f2f4;
+}
+.buy-prod{
+    padding:6px 15px;
+}
 
 .contain-img, .offcanvas {
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 .offcanvas {
@@ -60,7 +76,7 @@ li {
 }
 
 a {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 a:hover {
     opacity: 1;
@@ -69,10 +85,13 @@ a:hover {
 .hero{
     background-image: url("../ilustrations/hero.png");
     height: 32vh;
-    background-position:center;
     justify-content: center;
     display: flex;
+    background-position: center;
+    background-attachment: fixed;
+    border-bottom: 1px solid #dce5e2;
 }
+
 .card-body{
     border-bottom-left-radius: 11px;
     border-bottom-right-radius: 11px;
@@ -107,10 +126,13 @@ a:hover {
     border-bottom: solid 0.2px rgb(215, 213, 213);
     padding: 0.5rem;
 }
-.offcanvas-header{
-    background-color: #f5f5f7;
-    text-align: center;
-    color:#000;
+.offcanvas-header, .offcanvas-footer{
+    background-color: rgb(34, 34, 34);
+    color: #fff;
+}
+
+.offcanvas-footer{
+    padding:1rem 0.5rem;
 }
 
 .img-prod-carrito{
@@ -118,68 +140,25 @@ a:hover {
 }
 
 .categoria{
-    margin-bottom: 3rem;
+    padding: 3rem 0;
 }
 
 .precio{
     height: 25px;
 }
-/* .buy-prod {
-    font-family: inherit;
-    font-size: 20px;
-    background: royalblue;
-    color: white;
-    padding: 0.4em 0.5em;
-    padding-left: 0.8em;
-    display: flex;
-    align-items: center;
-    border: none;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.2s;
-   }
-   
-   .buy-prod span {
-    display: block;
-    margin-left: 0.3em;
-    transition: all 0.3s ease-in-out;
-   }
-   
-   .buy-prod svg {
-    display: block;
-    transform-origin: center center;
-    transition: transform 0.3s ease-in-out;
-   }
-   
-   .buy-prod:hover .svg-wrapper {
-    animation: fly-1 0.6s ease-in-out infinite alternate;
-   }
-   
-   .buy-prod:hover svg {
-    transform: translateX(2.1em) rotate(45deg) scale(1.2);
-   }
-   
-   .buy-prod:hover span {
-    transform: translateX(5em);
-   }
-   
-   .buy-prod:active {
-    transform: scale(0.95);
-   }
-   
-   @keyframes fly-1 {
-    from {
-     transform: translateY(0.1em);
-    }
-   
-    to {
-     transform: translateY(-0.1em);
-    }
-   } */
 
+.footer{
+    border-top: 1px solid #dce5e2;
+}
+.footer a {
+    text-decoration: none;
+    color:black;
+}
 
-
-
+.offcanvas-body{
+    align-content: space-between;
+    display:grid;
+}
 
 
 
