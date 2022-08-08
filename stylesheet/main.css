@@ -1,4 +1,5 @@
 @import url('http://fonts.cdnfonts.com/css/sf-pro-display');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 * {
     margin: 0;
@@ -6,15 +7,11 @@
     box-sizing: border-box
 }
 
-.error{
-    margin: auto;
-} 
 
 body {
     font-family: 'SF Pro Display', Helvetica, Arial, sans-serif;
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
     background-repeat: no-repeat;
-    cursor:url(../ilustrations/cursor.png),pointer;
 }
 
 header {
@@ -29,6 +26,16 @@ li {
     margin: 0 16px 0 16px;
 }
 
+.btn-mod{
+    cursor:pointer;
+}
+
+.error{
+    margin: auto;
+}
+.hero-titulo{
+    font-family: 'Pacifico', cursive;
+}
 .nav-link {
     padding: 0.1rem;
     font-size: 15px;
@@ -53,10 +60,13 @@ li {
     box-shadow: none !important;
 }
 .btn-cart {
-    padding-left: 2rem;
+    margin-left: 2rem;
 }
 .btn-primary{
     background-color: #0071e3;
+}
+.delete-prod{
+    cursor:pointer;
 }
 .page{
     border-radius: 7px;
@@ -97,8 +107,15 @@ a:hover {
     border-bottom-right-radius: 11px;
     box-shadow: 2px 4px 12px rgba(0,0,0,.08);
 }
+
+.box-light{
+    box-shadow: 0 2px 8px 3px rgb(255 255 255 / 8%)
+}
 .card {
     border:none;
+}
+.descripcion-producto{
+    color:rgba(0,0,0,.5);
 }
 .contain-img{
     object-fit: contain;
@@ -126,17 +143,30 @@ a:hover {
     border-bottom: solid 0.2px rgb(215, 213, 213);
     padding: 0.5rem;
 }
-.offcanvas-header, .offcanvas-footer{
+.close-canvas{
+    cursor: pointer;
+}
+.offcanvas-header{
     background-color: rgb(34, 34, 34);
     color: #fff;
 }
 
 .offcanvas-footer{
     padding:1rem 0.5rem;
+    bottom:-15px;
+    position:sticky;
+    background-color: #fff;
 }
-
+.text-canvas-footer{
+    color:black;
+}
+.container-img{
+    width: 60px;
+}
 .img-prod-carrito{
-    width:60px;
+    object-fit: contain;
+    height: 60px;
+    width: 100%;
 }
 
 .categoria{
@@ -152,7 +182,7 @@ a:hover {
 }
 .footer a {
     text-decoration: none;
-    color:black;
+    color:#000;
 }
 
 .offcanvas-body{
@@ -172,4 +202,7 @@ a:hover {
     .hero{
         margin-bottom: 1rem;
     }
+}
+.text-reset{
+    text-decoration: none;
 }

@@ -1,1 +1,107 @@
-[{"nombre":"iPhone 13","srcImagen":"./assets/Iphone13.png","precio":110.182,"categoria":"CELULAR","id":1},{"nombre":"iPhone 12 PLUS","srcImagen":"./assets/Iphone12.png","precio":95.5282,"categoria":"CELULAR","id":2},{"nombre":"iPhone 10","srcImagen":"./assets/Iphone10.jpg","precio":90.5182,"categoria":"CELULAR","id":3},{"nombre":"MacBook Pro 13","srcImagen":"./assets/MacBookPro13.png","precio":120.299,"categoria":"NOTEBOOK","id":4},{"nombre":"MacBook Pro MAX","srcImagen":"./assets/MacBookProMax.png","precio":150.519,"categoria":"NOTEBOOK","id":5},{"nombre":"MacBook Air M1","srcImagen":"./assets/MacBookAir.png","precio":250.429,"categoria":"NOTEBOOK","id":6},{"nombre":"iPad Pro Plus","srcImagen":"./assets/IpadProPlus.png","precio":10.206,"categoria":"IPAD","id":7},{"nombre":"iPad Pro 2","srcImagen":"./assets/IpadPro2.png","precio":9.119,"categoria":"IPAD","id":8},{"nombre":"iPad Plus","srcImagen":"./assets/IPadPlus.jpg","precio":10.119,"categoria":"IPAD","id":9},{"nombre":"Smartwatch FK88","srcImagen":"./assets/SmartwatchFK88.png","precio":92.361,"categoria":"RELOJ","id":10},{"nombre":"Smartwatch T500","srcImagen":"./assets/SmartwatchT500.png","precio":92.361,"categoria":"RELOJ","id":11},{"nombre":"Smartwatch Series 7","srcImagen":"./assets/SmartWatchSeries7.png","precio":92.361,"categoria":"RELOJ","id":12},{"nombre":"Airpod Pro","srcImagen":"./assets/AirpodPro.png","precio":51.213,"categoria":"AURICULAR","id":13},{"nombre":"Airpod Pro 1","srcImagen":"./assets/Airpods1.jpg","precio":51.213,"categoria":"AURICULAR","id":14},{"nombre":"Airpod 2da Generacion","srcImagen":"./assets/Airpod2daGeneracion.png","precio":51.213,"categoria":"AURICULAR","id":15}]
+[
+    {
+        "nombre": "iPhone 13",
+        "srcImagen": "./assets/Iphone13.png",
+        "precio": 110.62,
+        "categoria": "IPHONE",
+        "id": 1
+    },
+    {
+        "nombre": "iPhone 12 PLUS",
+        "srcImagen": "./assets/Iphone12.png",
+        "precio": 155.58,
+        "categoria": "IPHONE",
+        "id": 2
+    },
+    {
+        "nombre": "iPhone 10",
+        "srcImagen": "./assets/Iphone10.png",
+        "precio": 190.58,
+        "categoria": "IPHONE",
+        "id": 3
+    },
+    {
+        "nombre": "MacBook Pro 13",
+        "srcImagen": "./assets/MacBookPro13.png",
+        "precio": 120.29,
+        "categoria": "MACBOOK",
+        "id": 4
+    },
+    {
+        "nombre": "MacBook Pro MAX",
+        "srcImagen": "./assets/MacBookProMax.png",
+        "precio": 150.59,
+        "categoria": "MACBOOK",
+        "id": 5
+    },
+    {
+        "nombre": "MacBook Air M1",
+        "srcImagen": "./assets/MacBookAir.png",
+        "precio": 250.49,
+        "categoria": "MACBOOK",
+        "id": 6
+    },
+    {
+        "nombre": "iPad Pro Plus",
+        "srcImagen": "./assets/IpadProPlus.png",
+        "precio": 109.26,
+        "categoria": "IPAD",
+        "id": 7
+    },
+    {
+        "nombre": "iPad Pro 2",
+        "srcImagen": "./assets/IpadPro2.png",
+        "precio": 90.16,
+        "categoria": "IPAD",
+        "id": 8
+    },
+    {
+        "nombre": "iPad Plus",
+        "srcImagen": "./assets/IPadPlus.png",
+        "precio": 102.19,
+        "categoria": "IPAD",
+        "id": 9
+    },
+    {
+        "nombre": "Smartwatch FK88",
+        "srcImagen": "./assets/SmartwatchFK88.png",
+        "precio": 90.61,
+        "categoria": "WATCH",
+        "id": 10
+    },
+    {
+        "nombre": "Smartwatch T500",
+        "srcImagen": "./assets/SmartwatchT500.png",
+        "precio": 92.36,
+        "categoria": "WATCH",
+        "id": 11
+    },
+    {
+        "nombre": "Smartwatch Series 7",
+        "srcImagen": "./assets/SmartWatchSeries7.png",
+        "precio": 98.31,
+        "categoria": "WATCH",
+        "id": 12
+    },
+    {
+        "nombre": "Airpod Pro",
+        "srcImagen": "./assets/AirpodPro.png",
+        "precio": 51.53,
+        "categoria": "AIRPOD",
+        "id": 13
+    },
+    {
+        "nombre": "Airpod Pro 1",
+        "srcImagen": "./assets/Airpods1.png",
+        "precio": 41.13,
+        "categoria": "AIRPOD",
+        "id": 14
+    },
+    {
+        "nombre": "Airpod 2da Generacion",
+        "srcImagen": "./assets/Airpod2daGeneracion.png",
+        "precio": 49.23,
+        "categoria": "AIRPOD",
+        "id": 15
+    }
+]
