@@ -113,9 +113,9 @@ function eventosClick(e) {
     const targetSelect = e.target;
     let productoDevuelto = productos.find(e => e.id == targetSelect.id);
 
-    if (targetSelect.classList.contains('buy-prod')) {
+    if (targetSelect.classList.contains('buy-prod')){ 
+        e.preventDefault();
         actualizarCarrito(productoDevuelto)
-        detalleEnModal(productoDevuelto);
     }
 
     if (targetSelect.classList.contains('btn-mod')){
@@ -125,7 +125,7 @@ function eventosClick(e) {
         }
         else{
             modoOscuro = true;
-            mostrarAlert('Modo Ocuro');
+            mostrarAlert('Modo Oscuro');
         } 
         localStorage.setItem('modoOscuro', modoOscuro);
         cambiarEstilo(modoOscuro);
@@ -181,7 +181,7 @@ function carritoUI() {
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-center">
                     <label>Cantidad</label>
-                    <input style="width:50px" class="mx-2 inputCantidad" id="${prod.producto.id}" type="number" min="1" value="${prod.cantidad}">
+                    <input style="width:50px" onfocus="blur();" class="mx-2 inputCantidad" id="${prod.producto.id}" type="number" min="1" value="${prod.cantidad}">
                     </div>
                     <span class="fw-bold precio fs-5">$${prod.precioTotal}  USD</span>
                 </div>
@@ -226,7 +226,7 @@ function detalleEnModal(selectProducto) {
             </div>
             <form class="mx-auto my-lg-0 mx-lg-0 d-lg-flex d-block justify-content-start col-10 col-lg-12 align-items-center">
                 <div class="d-flex justify-content-lg-center justify-content-between">
-                    <button class="btn btn-primary buy-prod" id="${selectProducto.id}">
+                    <button data-bs-dismiss="modal" class="btn btn-primary buy-prod" id="${selectProducto.id}">
                       AGREGAR
                   </button>
                 </div>

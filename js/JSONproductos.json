@@ -57,7 +57,7 @@
     },
     {
         "nombre": "iPad Plus",
-        "srcImagen": "./assets/IPadPlus.png",
+        "srcImagen": "./assets/IpadPlus.png",
         "precio": 102.19,
         "categoria": "IPAD",
         "id": 9
