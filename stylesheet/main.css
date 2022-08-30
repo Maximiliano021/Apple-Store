@@ -198,6 +198,19 @@ a:hover {
     text-decoration: none;
 }
 
+.inputCantidad{
+    -webkit-appearance: none;
+    margin:0;
+    -moz-appearance: textfield;
+}
+
+.precioInput{
+    width:8.9rem;
+    padding:0;
+}
+
+
+
 @media (max-width:768px) {
     .card{
         margin:0 auto;
@@ -213,5 +226,11 @@ a:hover {
     }
     .header{
         border-radius: 0;
+    }
+    #offcanvasRight{
+        width:20rem;
+    }
+    #carrito-canvas{
+        justify-content: center;
     }
 }

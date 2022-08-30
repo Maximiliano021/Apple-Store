@@ -140,9 +140,9 @@ function eventosClick(e) {
 
     if (targetSelect.classList.contains('no-buy'))
         btnCloseCanvas.click();
-
-    if (targetSelect.classList.contains('inputCantidad'))
-        actualizarInput(targetSelect);
+    
+    if (targetSelect.classList.contains('btnCantidad'))
+        cambiarCantidad(targetSelect)
 }
 
 function actualizarCarrito(nuevoProducto) {
@@ -176,18 +176,27 @@ function carritoUI() {
                 
                 <h5 class="card-title fw-bold text-center">${prod.producto.nombre}</h5>
                 <i class='bx bxs-trash-alt bx-sm delete-prod' id="${prod.producto.id}"></i>
-                </div>
-                <div class="d-block m-2">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex justify-content-center">
-                    <label>Cantidad</label>
-                    <input style="width:50px" onfocus="blur();" class="mx-2 inputCantidad" id="${prod.producto.id}" type="number" min="1" value="${prod.cantidad}">
+            </div>
+            <div class="d-block mx-1 my-2">
+                    <div class="d-flex justify-content-between">
+                        <label class="p-0">Cantidad</label>
+                        <div class="d-flex justify-content-center">
+                            <button class="bg-transparent border-0 mx-1">
+                                <i id="decrementar" class='text-primary btnCantidad h-100 bx bx-minus' ></i>
+                            </button>
+                            <input style="width:25px" onfocus="blur();" class="mx-2 inputCantidad border-0 border-bottom text-center" id="${prod.producto.id}" type="number" min="1" value="${prod.cantidad}">
+                            <button class="bg-transparent mx-1 border-0 p-0 h-0"> 
+                                <i id="incrementar" class='text-primary h-100 btnCantidad bx bx-plus'></i>
+                            </button>
+                        </div>
+                        <div class="precioInput text-end">
+                            <span class="fw-bold precio fs-5">$${prod.precioTotal}  USD</span>
+                        </div>
                     </div>
-                    <span class="fw-bold precio fs-5">$${prod.precioTotal}  USD</span>
                 </div>
             </div>`;
         totalCantidad += prod.cantidad;
-        detalle.classList.add('producto-carrito');
+        detalle.classList.add('producto-carrito', 'py-2', 'mb-2');
         carritoCanvas.append(detalle);
     })
     carrito.map(prod => totalSuma += prod.producto.precio * prod.cantidad)
@@ -334,3 +343,14 @@ function estiloModal(){
         modalDescripcion.classList.remove('text-light');
     }
 }
+
+function cambiarCantidad(button){
+    let inputCantidad = button.parentElement.parentElement.querySelector('.inputCantidad');
+    
+    if(inputCantidad.value<2 && button.id == "decrementar")
+        eliminarDeCarrito(inputCantidad) 
+    else{
+        (button.id == "decrementar")? inputCantidad.valueAsNumber-=1 : inputCantidad.valueAsNumber+=1
+        actualizarInput(inputCantidad);
+    }
+}  
