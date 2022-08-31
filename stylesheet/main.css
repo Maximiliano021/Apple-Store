@@ -227,10 +227,4 @@ a:hover {
     .header{
         border-radius: 0;
     }
-    #offcanvasRight{
-        width:20rem;
-    }
-    #carrito-canvas{
-        justify-content: center;
-    }
 }
